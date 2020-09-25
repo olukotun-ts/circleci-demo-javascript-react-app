@@ -4,6 +4,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:10
+    resource_class: xlarge
     steps:
       - checkout 
       - restore_cache:
@@ -27,6 +28,7 @@ jobs:
   verify:
     docker:
       - image: circleci/node:10
+    resource_class: xlarge
     steps:
       - run:
           name: List files before workspace attach
@@ -35,7 +37,13 @@ jobs:
           at: ~/project/
       - run:
           name: List files after workspace attach
-          command: ls -al
+          command: |
+            echo "Files at project root"
+            echo "====================="
+            ls -al
+            echo "Files in build folder"
+            echo "====================="
+            ls -al build
 
 workflows:
   version: 2.1
